@@ -27,18 +27,18 @@ public class InputHandler : MonoBehaviour
 
         if (gameManager.currentPlayer == GameManager.Player.Player1)
         {
-            if (Input.GetKeyDown(KeyCode.A)) { inputDetected = true; HandleInput(0, "A"); }
+            if (Input.GetKeyDown(KeyCode.A)) { inputDetected = true; HandleInput(0, "C"); }
             if (Input.GetKeyDown(KeyCode.B)) { inputDetected = true; HandleInput(1, "B"); }
-            if (Input.GetKeyDown(KeyCode.C)) { inputDetected = true; HandleInput(2, "C"); }
+            if (Input.GetKeyDown(KeyCode.C)) { inputDetected = true; HandleInput(2, "A"); }
             if (Input.GetKeyDown(KeyCode.D)) { inputDetected = true; HandleInput(3, "D"); }
             if (Input.GetKeyDown(KeyCode.E)) { inputDetected = true; HandleInput(4, "E"); }
             if (Input.GetKeyDown(KeyCode.F)) { inputDetected = true; HandleInput(5, "F"); }
         }
         else if (gameManager.currentPlayer == GameManager.Player.Player2)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1)) { inputDetected = true; HandleInput(0, "1"); }
+            if (Input.GetKeyDown(KeyCode.Alpha1)) { inputDetected = true; HandleInput(0, "3"); }
             if (Input.GetKeyDown(KeyCode.Alpha2)) { inputDetected = true; HandleInput(1, "2"); }
-            if (Input.GetKeyDown(KeyCode.Alpha3)) { inputDetected = true; HandleInput(2, "3"); }
+            if (Input.GetKeyDown(KeyCode.Alpha3)) { inputDetected = true; HandleInput(2, "1"); }
             if (Input.GetKeyDown(KeyCode.Alpha4)) { inputDetected = true; HandleInput(3, "4"); }
             if (Input.GetKeyDown(KeyCode.Alpha5)) { inputDetected = true; HandleInput(4, "5"); }
             if (Input.GetKeyDown(KeyCode.Alpha6)) { inputDetected = true; HandleInput(5, "6"); }
