@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class IndicatorShrink : MonoBehaviour
 {
-    public float shrinkTime = 2f;
+    public float shrinkTime = 4f;
     private Vector3 originalScale;
     private float timer;
 

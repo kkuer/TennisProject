@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class BallMachine : MonoBehaviour
@@ -15,21 +15,29 @@ public class BallMachine : MonoBehaviour
     public float ballTravelTime = 1f;
 
     private Transform currentTarget;
+    private GameObject currentBallObject;
+
 
     public IEnumerator LaunchBall()
     {
-        // Ëæ»ú´ÓÈ«²¿ 6 ¸öÄ¿±êÀïÑ¡Ò»¸ö£¨°üº¬×óÓÒ£©
-        int index = Random.Range(0, 6); // 0~5
+        // é˜²æ­¢é‡å¤å‘çƒ
+        if (currentBallObject != null)
+        {
+            Debug.LogWarning("âš ï¸ å·²ç»æœ‰çƒåœ¨åœºä¸Šï¼Œä¸èƒ½é‡å¤å‘çƒ");
+            yield break;
+        }
+
+        int index = Random.Range(0, 6);
         currentTarget = (index < 3) ? leftTargets[index] : rightTargets[index - 3];
 
-        // ÌáÊ¾È¦
+        // æç¤ºåœˆ
         Instantiate(indicatorPrefab, currentTarget.position, Quaternion.identity);
 
-        // ·¢ÉäÇò
+        // å‘çƒ
         Vector3 firePoint = transform.position + new Vector3(0, 1f, 0);
-        GameObject newBall = Instantiate(ballPrefab, firePoint, Quaternion.identity);
+        currentBallObject = Instantiate(ballPrefab, firePoint, Quaternion.identity);
 
-        BallController ballController = newBall.GetComponent<BallController>();
+        BallController ballController = currentBallObject.GetComponent<BallController>();
         ballController.start = firePoint;
         ballController.end = currentTarget.position;
         ballController.control = (firePoint + currentTarget.position) / 2 + new Vector3(0, 2f, 0);
@@ -40,5 +48,10 @@ public class BallMachine : MonoBehaviour
 
         yield return null;
     }
+    public void ClearCurrentBall()
+    {
+        currentBallObject = null;
+    }
+
 
 }

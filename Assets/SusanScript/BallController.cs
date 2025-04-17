@@ -6,12 +6,13 @@ public class BallController : MonoBehaviour
     public Vector3 start;
     public Vector3 control;
     public Vector3 end;
-    public float travelTime = 1f;
+    public float travelTime = 2f;
 
     private float timer = 0f;
     private bool isReturning = false;
     private bool isHit = false;
     private bool isActive = true;
+    private bool isDead = false; // ⚠️ 飞出时标记为“不可再击打”
 
     private Vector3 directionAfterEnd;
 
@@ -52,6 +53,7 @@ public class BallController : MonoBehaviour
 
             if (isHit)
             {
+                GameManager.Instance.ballMachine.ClearCurrentBall();
                 Destroy(gameObject);
                 GameManager.Instance.OnBallReturned();
             }
@@ -64,6 +66,8 @@ public class BallController : MonoBehaviour
 
     private IEnumerator FlyOutThenDestroy()
     {
+        isDead = true; // 🛡️ 标记为不可再击球
+
         float extraFlyTime = 1.5f;
         float flySpeed = 8f;
 
@@ -75,6 +79,7 @@ public class BallController : MonoBehaviour
             yield return null;
         }
 
+        GameManager.Instance.ballMachine.ClearCurrentBall();
         Destroy(gameObject);
         GameManager.Instance.OnBallMissed();
     }
@@ -88,6 +93,12 @@ public class BallController : MonoBehaviour
             return;
         }
 
+        if (isDead)
+        {
+            Debug.LogWarning("❌ 球已经开始飞出边界，不允许再击打！");
+            return;
+        }
+
         if (!canBeHit)
         {
             Debug.LogWarning("[MISS] 玩家按对了位置，但时机不对 ❌（球还没飞到圈圈位置）");
@@ -96,7 +107,7 @@ public class BallController : MonoBehaviour
 
         Debug.Log("✅ 击球成功！球开始回弹");
 
-        // ✅ 关键：加分逻辑
+        // 加分
         ScoreManager.Instance.AddScore(GameManager.Instance.currentPlayer);
 
         isHit = true;
@@ -108,6 +119,4 @@ public class BallController : MonoBehaviour
         end = GameManager.Instance.ballMachine.transform.position + new Vector3(0, 1f, 0);
         control = (start + end) / 2 + new Vector3(0, 2f, 0);
     }
-
-
 }
