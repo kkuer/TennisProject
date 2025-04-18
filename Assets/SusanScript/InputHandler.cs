@@ -12,16 +12,8 @@ public class InputHandler : MonoBehaviour
             return;
         }
 
-        // 显示当前回合状态
+        // 显示当前回合状态（可选）
         Debug.Log("🎮 当前轮到: " + gameManager.currentPlayer);
-
-        if (!gameManager.IsWaitingForInput)
-        {
-            // 你按下任何键但时机不对也能看到
-            if (Input.anyKeyDown)
-                Debug.LogWarning("⚠️ 当前不是击球时间，按键无效");
-            return;
-        }
 
         bool inputDetected = false;
 
@@ -44,7 +36,7 @@ public class InputHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha6)) { inputDetected = true; HandleInput(5, "6"); }
         }
 
-        // 如果有按键按下但不是有效输入
+        // 有按键但不是当前玩家可用键
         if (!inputDetected && Input.anyKeyDown)
         {
             Debug.LogWarning("❌ 按下了无效按键（不是当前玩家的键位）");
@@ -54,7 +46,6 @@ public class InputHandler : MonoBehaviour
     void HandleInput(int index, string keyLabel)
     {
         Debug.Log($"✅ [输入检测] 当前玩家: {gameManager.currentPlayer}，按下了 {keyLabel}，对应目标索引: {index}");
-
         gameManager.OnPlayerInput(index);
     }
 }
