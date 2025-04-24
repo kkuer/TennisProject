@@ -125,4 +125,7 @@ MonoBehaviour:
   control: {x: 0, y: 0, z: 0}
   end: {x: 0, y: 0, z: 0}
   travelTime: 1
-  isReturning: 0
+  hitWindowStartPercent: 0.297
+  hitWindowEndPercent: 1
+  showDebugText: 1
+  debugText: {fileID: 0}
